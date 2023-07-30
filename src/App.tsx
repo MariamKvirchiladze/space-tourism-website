@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import GlobalStyles from "./Globalstyles";
-import Header from "./components/header/Header";
+import Home from "./components/pages/Home";
 
 function App() {
   return (
     <MainContainer>
       <GlobalStyles />
-      <Header />
+      <Home />
     </MainContainer>
   );
 }
@@ -19,6 +19,5 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: gray; //temporary
   align-items: center;
 `;
