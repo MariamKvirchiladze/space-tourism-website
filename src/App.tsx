@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import GlobalStyles from "./Globalstyles";
-import Home from "./components/pages/Home";
+import Destination from "./components/pages/Destination";
+// import Home from "./components/pages/Home";
 
 function App() {
   return (
     <MainContainer>
       <GlobalStyles />
-      <Home />
+      {/* <Home /> */}
+      <Destination />
     </MainContainer>
   );
 }
