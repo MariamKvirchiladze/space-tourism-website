@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import GlobalStyles from "./Globalstyles";
-import Destination from "./components/pages/Destination";
+import Crew from "./components/pages/Crew";
+// import Destination from "./components/pages/Destination";
 // import Home from "./components/pages/Home";
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
     <MainContainer>
       <GlobalStyles />
       {/* <Home /> */}
-      <Destination />
+      {/* <Destination /> */}
+      <Crew />
     </MainContainer>
   );
 }
