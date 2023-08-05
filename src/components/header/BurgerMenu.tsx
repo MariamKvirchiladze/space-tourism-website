@@ -1,14 +1,22 @@
 import styled from "styled-components";
 import openMenu from "/assets/shared/icon-hamburger.svg";
 import closeMenu from "/assets/shared/icon-close.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const BurgerMenu = (): JSX.Element => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
+  const [choosePage, setChoosePage] = useState<string>("home");
+  const location = useLocation();
 
   const openBurgerMenu = () => {
     setIsOpened(!isOpened);
   };
+  useEffect(() => {
+    const address = location.pathname;
+    const PagePresent = address.split("/")[1];
+    setChoosePage(PagePresent);
+  }, [location]);
 
   return (
     <BurgerMenuContainer>
@@ -18,7 +26,7 @@ const BurgerMenu = (): JSX.Element => {
         src={openMenu}
         alt="svg burger"
       />
-      <Menu isOpened={isOpened.toString()}>
+      <Menu isOpened={isOpened.toString()} choosePage={choosePage}>
         <img
           onClick={openBurgerMenu}
           className="close-icon"
@@ -26,26 +34,30 @@ const BurgerMenu = (): JSX.Element => {
           alt="close svg"
         />
         <div className="pages">
-          <a>
+          <Link to="/">
             <h2> 00</h2>
             <h1>HOME </h1>
+            <div className="page home"> </div>
             <div className="hover"></div>
-          </a>
-          <a>
+          </Link>
+          <Link to="/Destination">
             <h2> 01</h2>
             <h1>DESTINATION </h1>
+            <div className="page destination"> </div>
             <div className="hover"></div>
-          </a>
-          <a>
+          </Link>
+          <Link to="/Crew">
             <h2> 02</h2>
             <h1>CREW </h1>
+            <div className="page crew"> </div>
             <div className="hover"></div>
-          </a>
-          <a>
+          </Link>
+          <Link to="/Technology">
             <h2> 03</h2>
             <h1>TECHNOLOGY </h1>
+            <div className="page technology"> </div>
             <div className="hover"></div>
-          </a>
+          </Link>
         </div>
       </Menu>
     </BurgerMenuContainer>
@@ -65,7 +77,7 @@ const BurgerMenuContainer = styled.div`
     }
   }
 `;
-const Menu = styled.div<{ isOpened: string }>`
+const Menu = styled.div<{ isOpened: string; choosePage: string }>`
   width: 254px;
   height: 100vh;
   padding: 33px 33px 0 33px;
@@ -185,6 +197,37 @@ const Menu = styled.div<{ isOpened: string }>`
       background-color: #ffffff;
       position: absolute;
       display: none;
+    }
+    .page {
+      width: 3px;
+      height: 31px;
+      background-color: #ffffff;
+      position: absolute;
+      right: -33px;
+      @media (min-width: 768px) {
+        width: 100%;
+        height: 3px;
+        right: 0;
+        bottom: -40px;
+        display: none;
+      }
+    }
+    .home {
+      display: ${(props) => (props.choosePage === "" ? "flex" : "none")};
+    }
+
+    .destination {
+      display: ${(props) =>
+        props.choosePage === "Destination" ? "flex" : "none"};
+    }
+
+    .crew {
+      display: ${(props) => (props.choosePage === "Crew" ? "flex" : "none")};
+    }
+
+    .technology {
+      display: ${(props) =>
+        props.choosePage === "technoloogy" ? "flex" : "none"};
     }
 
     a:hover .hover {

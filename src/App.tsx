@@ -1,19 +1,24 @@
 import styled from "styled-components";
 import GlobalStyles from "./Globalstyles";
 import Technology from "./components/pages/Technology";
-// import Crew from "./components/pages/Crew";
-// import Destination from "./components/pages/Destination";
-// import Home from "./components/pages/Home";
+import Crew from "./components/pages/Crew";
+import Destination from "./components/pages/Destination";
+import Home from "./components/pages/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <MainContainer>
-      <GlobalStyles />
-      {/* <Home /> */}
-      {/* <Destination /> */}
-      {/* <Crew /> */}
-      <Technology />
-    </MainContainer>
+    <Router>
+      <MainContainer>
+        <GlobalStyles />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="Destination" element={<Destination />} />
+          <Route path="Crew" element={<Crew />} />
+          <Route path="Technology" element={<Technology />} />
+        </Routes>
+      </MainContainer>
+    </Router>
   );
 }
 
