@@ -227,7 +227,7 @@ const Menu = styled.div<{ isOpened: string; choosePage: string }>`
 
     .technology {
       display: ${(props) =>
-        props.choosePage === "technoloogy" ? "flex" : "none"};
+        props.choosePage === "Technology" ? "flex" : "none"};
     }
 
     a:hover .hover {

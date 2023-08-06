@@ -3,16 +3,25 @@ import Header from "../header/Header";
 import bgDestMob from "/assets/destination/background-destination-mobile.jpg";
 import bgDestTab from "/assets/destination/background-destination-tablet.jpg";
 import bgDestDesk from "/assets/destination/background-destination-desktop.jpg";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import data from "../../../data.json";
 
 const Destination = (): JSX.Element => {
   const parameter = useParams();
+  const location = useLocation();
   const planetInfo = data.destinations.find(
     (item: any) => item.name.toLowerCase() === parameter.planets
   );
 
   const photo = `.${planetInfo?.images.webp}`;
+
+  const [currentPage, setCurrentPage] = useState<string>("moon");
+  useEffect(() => {
+    const address = location.pathname;
+    const PageNow = address.split("/")[2];
+    setCurrentPage(PageNow);
+  }, [location]);
   return (
     <DestionationContainer>
       <Header />
@@ -23,20 +32,20 @@ const Destination = (): JSX.Element => {
       <div className="mainDest">
         <img src={photo} />
         <div className="chooseDest">
-          <nav>
+          <Navdiv currentPage={currentPage}>
             <Link to="/Destination/moon">
-              MOON <div className="hover"> </div>
+              MOON <div className="hover moon"> </div>
             </Link>
             <Link to="/Destination/mars">
-              MARS <div className="hover"> </div>
+              MARS <div className="hover mars"> </div>
             </Link>
             <Link to="/Destination/europa">
-              EUROPA <div className="hover"> </div>
+              EUROPA <div className="hover europa"> </div>
             </Link>
             <Link to="/Destination/titan">
-              TITAN <div className="hover"> </div>
+              TITAN <div className="hover titan"> </div>
             </Link>
-          </nav>
+          </Navdiv>
 
           <div className="planetInfo">
             <h1>{planetInfo?.name}</h1>
@@ -201,61 +210,6 @@ const DestionationContainer = styled.div`
         align-items: flex-start;
         gap: 53px;
       }
-      nav {
-        width: 240px;
-        display: flex;
-        gap: 27px;
-        align-items: center;
-        position: relative;
-
-        @media screen and (min-width: 768px) {
-          width: 285px;
-          gap: 35px;
-        }
-
-        a {
-          font-family: Barlow Condensed;
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 17px;
-          letter-spacing: 2.36px;
-          color: #d0d6f9;
-          text-decoration: none;
-          text-transform: uppercase;
-          @media screen and (min-width: 768px) {
-            font-size: 16px;
-            line-height: 19px;
-            letter-spacing: 2.7px;
-          }
-          @media screen and (min-width: 1024px) {
-            position: relative;
-          }
-        }
-        .hover {
-          height: 3px;
-          display: none;
-          background-color: white;
-          @media screen and (min-width: 1024px) {
-            position: absolute;
-            bottom: -12px;
-            width: 0;
-            transition: width 0.4s ease;
-          }
-        }
-        a {
-          position: relative;
-          cursor: pointer;
-        }
-        a:focus .hover {
-          width: 100%;
-          display: block;
-        }
-        a:hover .hover {
-          width: 100%;
-          display: block;
-          opacity: 0.5;
-        }
-      }
       hr {
         background: #383b4b;
         width: 100%;
@@ -366,5 +320,68 @@ const DestionationContainer = styled.div`
         }
       }
     }
+  }
+`;
+const Navdiv = styled.nav<{ currentPage: string }>`
+  width: 240px;
+  display: flex;
+  gap: 27px;
+  align-items: center;
+  position: relative;
+
+  @media screen and (min-width: 768px) {
+    width: 285px;
+    gap: 35px;
+  }
+
+  a {
+    font-family: Barlow Condensed;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 2.36px;
+    color: #d0d6f9;
+    text-decoration: none;
+    text-transform: uppercase;
+    @media screen and (min-width: 768px) {
+      font-size: 16px;
+      line-height: 19px;
+      letter-spacing: 2.7px;
+    }
+    @media screen and (min-width: 1024px) {
+      position: relative;
+    }
+  }
+  .hover {
+    height: 3px;
+    display: none;
+    background-color: white;
+    position: absolute;
+    bottom: -12px;
+    width: 100%;
+  }
+  a {
+    position: relative;
+    cursor: pointer;
+  }
+  a:hover .hover {
+    width: 100%;
+    display: block;
+    opacity: 0.5;
+  }
+  .moon {
+    display: ${(props) => (props.currentPage === "moon" ? "block" : "none")};
+  }
+
+  .mars {
+    display: ${(props) => (props.currentPage === "mars" ? "block" : "none")};
+  }
+
+  .europa {
+    display: ${(props) => (props.currentPage === "europa" ? "block" : "none")};
+  }
+
+  .titan {
+    display: ${(props) => (props.currentPage === "titan" ? "block" : "none")};
   }
 `;
