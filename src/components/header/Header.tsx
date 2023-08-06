@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import logo from "/assets/shared/logo.svg";
 import BurgerMenu from "./BurgerMenu";
+import { useNavigate } from "react-router-dom";
 
 const Header = (): JSX.Element => {
+  const navigate = useNavigate();
   return (
     <HeaderContainer>
-      <img src={logo} alt="home logo" />
+      <img onClick={() => navigate("/")} src={logo} alt="home logo" />
       <hr />
       <BurgerMenu />
     </HeaderContainer>
