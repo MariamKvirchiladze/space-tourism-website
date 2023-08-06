@@ -3,8 +3,16 @@ import Header from "../header/Header";
 import bgDestMob from "/assets/destination/background-destination-mobile.jpg";
 import bgDestTab from "/assets/destination/background-destination-tablet.jpg";
 import bgDestDesk from "/assets/destination/background-destination-desktop.jpg";
+import { useParams, Link } from "react-router-dom";
+import data from "../../../data.json";
 
 const Destination = (): JSX.Element => {
+  const parameter = useParams();
+  const planetInfo = data.destinations.find(
+    (item: any) => item.name.toLowerCase() === parameter.planets
+  );
+
+  const photo = `.${planetInfo?.images.webp}`;
   return (
     <DestionationContainer>
       <Header />
@@ -13,41 +21,36 @@ const Destination = (): JSX.Element => {
         <p className="textDest"> pick your destination</p>
       </div>
       <div className="mainDest">
-        <img />
+        <img src={photo} />
         <div className="chooseDest">
           <nav>
-            <a>
+            <Link to="/Destination/moon">
               MOON <div className="hover"> </div>
-            </a>
-            <a>
+            </Link>
+            <Link to="/Destination/mars">
               MARS <div className="hover"> </div>
-            </a>
-            <a>
+            </Link>
+            <Link to="/Destination/europa">
               EUROPA <div className="hover"> </div>
-            </a>
-            <a>
+            </Link>
+            <Link to="/Destination/titan">
               TITAN <div className="hover"> </div>
-            </a>
+            </Link>
           </nav>
 
           <div className="planetInfo">
-            <h1>planet</h1>
-            <p className="info">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
-              eum nemo. Quia, soluta neque ipsa nobis ducimus, amet eius maxime
-              sint quod iste beatae minima doloremque cumque eos vitae
-              consequatur
-            </p>
+            <h1>{planetInfo?.name}</h1>
+            <p className="info">{planetInfo?.description}</p>
           </div>
           <hr />
           <div className="timeAndkm">
             <div className="dist">
               <h3 className="text"> AVG. DISTANCE</h3>
-              <h2 className="num"> 123123</h2>
+              <h2 className="num"> {planetInfo?.distance}</h2>
             </div>
             <div className="dist">
               <h3 className="text"> EST. TRAVEL TIME</h3>
-              <h2 className="num"> 123123</h2>
+              <h2 className="num"> {planetInfo?.travel}</h2>
             </div>
           </div>
         </div>

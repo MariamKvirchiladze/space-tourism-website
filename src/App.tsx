@@ -13,7 +13,7 @@ function App() {
         <GlobalStyles />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="Destination" element={<Destination />} />
+          <Route path="Destination/:planets" element={<Destination />} />
           <Route path="Crew" element={<Crew />} />
           <Route path="Technology" element={<Technology />} />
         </Routes>
