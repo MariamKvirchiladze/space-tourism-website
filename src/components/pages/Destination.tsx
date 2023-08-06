@@ -94,7 +94,6 @@ const DestionationContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    margin-bottom: 32px;
     gap: 16px;
     justify-content: center;
     align-items: center;
@@ -106,7 +105,6 @@ const DestionationContainer = styled.div`
     @media (min-width: 1024px) {
       max-width: 1500px;
       padding-left: 5%;
-      margin: 0 auto 154px auto;
       padding-top: 212px;
     }
 

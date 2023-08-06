@@ -85,13 +85,11 @@ const CrewContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    margin-bottom: 32px;
     gap: 16px;
     justify-content: center;
     align-items: center;
     @media (min-width: 768px) {
       padding-top: 136px;
-      margin-bottom: 60px;
       justify-content: flex-start;
       padding-left: 38.5px;
     }
@@ -99,7 +97,6 @@ const CrewContainer = styled.div`
       max-width: 1500px;
       padding-left: 5%;
       padding-top: 212px;
-      margin: 0 auto 154px auto;
     }
     h2 {
       font-family: "Barlow Condensed";

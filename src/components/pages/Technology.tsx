@@ -3,8 +3,44 @@ import BgTechMob from "/assets/technology/background-technology-mobile.jpg";
 import BgTechTab from "/assets/technology/background-technology-tablet.jpg";
 import BgTechDesk from "/assets/technology/background-technology-desktop.jpg";
 import Header from "../header/Header";
+import { useParams, Link, useLocation } from "react-router-dom";
+import data from "../../../data.json";
+import { useEffect, useState } from "react";
+
+interface Types {
+  name?: string;
+  images?: {
+    portrait?: string;
+    landscape?: string;
+  };
+  description?: string;
+}
+let techInfo: Types | undefined;
 
 const Technology = (): JSX.Element => {
+  const [currentPage, setCurrentPage] = useState<string>("vehicle");
+  const parameters = useParams();
+  if (parameters.rocket === "vehicle") {
+    techInfo = data.technology.find(
+      (item: any) => item.name === "Launch vehicle"
+    );
+  } else if (parameters.rocket === "Spaceport") {
+    techInfo = data.technology.find((item: any) => item.name === "Spaceport");
+  } else if (parameters.rocket === "capsule") {
+    techInfo = data.technology.find(
+      (item: any) => item.name === "Space capsule"
+    );
+  }
+
+  const photoLandscape = `.${techInfo?.images?.landscape}`;
+  const photoPortrait = `.${techInfo?.images?.portrait}`;
+
+  const location = useLocation();
+  useEffect(() => {
+    const address = location.pathname;
+    const PageNow = address.split("/")[2];
+    setCurrentPage(PageNow);
+  }, [location]);
   return (
     <TechnologyContainer>
       <Header />
@@ -13,37 +49,32 @@ const Technology = (): JSX.Element => {
         <p className="text"> SPACE LAUNCH 101</p>
       </div>
       <div className="mainTech">
-        <img className="land" alt="rocket photo" />
-        <img className="port" alt="rocket photo" />
+        <img className="land" src={photoLandscape} alt="rocket photo" />
+        <img className="port" src={photoPortrait} alt="rocket photo" />
         <div className="chooseTech">
-          <NavDiv>
-            <a className="vehicle">
+          <NavDiv currentPage={currentPage}>
+            <Link to="/Technology/vehicle" className="vehicle">
               <div className="rhombus">
                 <span>1</span>
               </div>
-            </a>
-            <a className="spaceport">
+            </Link>
+            <Link to="/Technology/Spaceport" className="spaceport">
               <div className="rhombus">
                 <span>2</span>
               </div>
-            </a>
-            <a className="capsule">
+            </Link>
+            <Link to="/Technology/capsule" className="capsule">
               <div className="rhombus">
                 <span>3</span>
               </div>
-            </a>
+            </Link>
           </NavDiv>
           <div className="technologyInfo">
             <div className="terminology">
               <h4>THE TERMINOLOGY… </h4>
-              <h1> name</h1>
+              <h1> {techInfo?.name}</h1>
             </div>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus,
-              nesciunt. Veritatis illo dignissimos quidem non impedit,
-              necessitatibus velit suscipit inventore consequuntur magni culpa,
-              possimus quod numquam minus eveniet nihil nesciunt{" "}
-            </p>
+            <p>{techInfo?.description} </p>
           </div>
         </div>
       </div>
@@ -290,7 +321,7 @@ const TechnologyContainer = styled.div`
     }
   }
 `;
-const NavDiv = styled.nav`
+const NavDiv = styled.nav<{ currentPage: string }>`
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -363,5 +394,55 @@ const NavDiv = styled.nav`
     left: 40%;
     transform: rotate(-45deg);
     color: white;
+  }
+  .vehicle {
+    background-color: ${(props) =>
+      props.currentPage === "vehicle"
+        ? "#FFFFFF"
+        : "rgba(255, 255, 255, 0.25)"};
+  }
+  .vehicle .rhombus {
+    background-color: ${(props) =>
+      props.currentPage === "vehicle"
+        ? "rgba(0, 0, 0, 0);"
+        : "rgba(0, 0, 0, 0.7);"};
+  }
+  .vehicle .rhombus span {
+    color: ${(props) => (props.currentPage === "vehicle" ? "black" : "white")};
+  }
+
+  .spaceport {
+    background-color: ${(props) =>
+      props.currentPage === "Spaceport"
+        ? "#FFFFFF"
+        : "rgba(255, 255, 255, 0.25)"};
+  }
+  .spaceport .rhombus {
+    background-color: ${(props) =>
+      props.currentPage === "Spaceport"
+        ? "rgba(0, 0, 0, 0);"
+        : "rgba(0, 0, 0, 0.7);"};
+  }
+  .spaceport .rhombus span {
+    color: ${(props) =>
+      props.currentPage === "Spaceport" ? "black" : "white"};
+  }
+
+  .capsule {
+    background-color: ${(props) =>
+      props.currentPage === "capsule"
+        ? "#FFFFFF"
+        : "rgba(255, 255, 255, 0.25)"};
+    color: ${(props) =>
+      props.currentPage === "capsule" ? "black" : "#ffffff"};
+  }
+  .capsule .rhombus {
+    background-color: ${(props) =>
+      props.currentPage === "capsule"
+        ? "rgba(0, 0, 0, 0);"
+        : "rgba(0, 0, 0, 0.7);"};
+  }
+  .capsule .rhombus span {
+    color: ${(props) => (props.currentPage === "capsule" ? "black" : "white")};
   }
 `;
