@@ -3,8 +3,25 @@ import Header from "../header/Header";
 import BgCrewMob from "/assets/crew/background-crew-mobile.jpg";
 import BgCrewTab from "/assets/crew/background-crew-tablet.jpg";
 import BgCrewDesk from "/assets/crew/background-crew-desktop.jpg";
+import { Link, useLocation, useParams } from "react-router-dom";
+import data from "../../../data.json";
+import { useEffect, useState } from "react";
 
 const Crew = (): JSX.Element => {
+  const parameter = useParams();
+  const location = useLocation();
+  const [currentPage, setCurrentPage] = useState<string>("douglas");
+  const crewInfo = data.crew.find(
+    (item: any) => item.name.split(" ")[0].toLowerCase() === parameter.person
+  );
+
+  const photo = `.${crewInfo?.images.webp}`;
+
+  useEffect(() => {
+    const address = location.pathname;
+    const PageNow = address.split("/")[2];
+    setCurrentPage(PageNow);
+  }, [location]);
   return (
     <CrewContainer>
       <Header />
@@ -14,27 +31,22 @@ const Crew = (): JSX.Element => {
       </div>
       <div className="mainCrew">
         <div className="photoBox">
-          <img alt="photo of crew member" />
+          <img src={photo} alt="photo of crew member" />
           <hr />
         </div>
         <div className="crewInfo">
-          <NavDiv>
-            <a className="douglas"></a>
-            <a className="mark"></a>
-            <a className="victor"></a>
-            <a className="annousheh"></a>
+          <NavDiv currentPage={currentPage}>
+            <Link to="/Crew/douglas" className="douglas"></Link>
+            <Link to="/Crew/mark" className="mark"></Link>
+            <Link to="/Crew/victor" className="victor"></Link>
+            <Link to="/Crew/anousheh" className="annousheh"></Link>
           </NavDiv>
           <div className="crewRole">
             <div className="name">
-              <h2>role </h2>
-              <h1> name</h1>
+              <h2>{crewInfo?.role} </h2>
+              <h1> {crewInfo?.name}</h1>
             </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni,
-              incidunt officiis assumenda ullam, nihil odit exercitationem
-              numquam accusantium reprehenderit quisquam corrupti minima esse
-              labore porro cupiditate enim vel a dolorem
-            </p>
+            <p>{crewInfo?.bio}</p>
           </div>
         </div>
       </div>
@@ -328,7 +340,7 @@ const CrewContainer = styled.div`
   }
 `;
 
-const NavDiv = styled.nav`
+const NavDiv = styled.nav<{ currentPage: string }>`
   display: flex;
   flex-direction: row;
   gap: 16px;
@@ -355,5 +367,20 @@ const NavDiv = styled.nav`
   }
   a:hover {
     opacity: 0.5;
+  }
+  .douglas {
+    opacity: ${(props) => (props.currentPage === "douglas" ? "" : "0.17")};
+  }
+
+  .mark {
+    opacity: ${(props) => (props.currentPage === "mark" ? "" : "0.17")};
+  }
+
+  .victor {
+    opacity: ${(props) => (props.currentPage === "victor" ? "" : "0.17")};
+  }
+
+  .annousheh {
+    opacity: ${(props) => (props.currentPage === "anousheh" ? "" : "0.17")};
   }
 `;

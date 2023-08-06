@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="Destination/:planets" element={<Destination />} />
-          <Route path="Crew" element={<Crew />} />
+          <Route path="Crew/:person" element={<Crew />} />
           <Route path="Technology" element={<Technology />} />
         </Routes>
       </MainContainer>
